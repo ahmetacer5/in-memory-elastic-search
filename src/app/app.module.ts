@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
+import { ApiService } from './api.service';
+import { HttpModule } from '@angular/http';
+import { TypeaheadModule } from 'ngx-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,9 +13,13 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    HttpModule,
+    TypeaheadModule.forRoot()],
+  providers: [
+    ApiService
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

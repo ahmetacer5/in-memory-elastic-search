@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { ServerModule } from '@angular/platform-server';
 import { NgModule } from '@angular/core';
 
 import { AppModule } from './app.module';
-
 import { AppComponent } from './app.component';
 
 
@@ -10,7 +10,8 @@ import { AppComponent } from './app.component';
   imports: [
     AppModule,
     BrowserModule.withServerTransition({ appId: 'ssr-pipedrive' }),
+    ServerModule,
   ],
   bootstrap: [AppComponent]
 })
-export class BrowserAppModule { }
+export class ServerAppModule { }
