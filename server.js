@@ -110,7 +110,8 @@ app.post('/api/search', function (req, res) {
   });
 });
 
+var port = process.env.PORT || 8080;
 // start server and listen
-app.listen(80, () => {
-  console.log('Angular server started on port 80');
+app.listen(port, () => {
+  console.log('Angular server started on port ' + port);
 });
