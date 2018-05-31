@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ApiService } from './api.service';
 import { HttpModule } from '@angular/http';
-import { TypeaheadModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 
 
@@ -14,8 +13,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    TypeaheadModule.forRoot()],
+    HttpModule],
   providers: [
     ApiService
   ],

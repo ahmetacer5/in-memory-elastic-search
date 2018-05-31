@@ -82,7 +82,6 @@ app.post('/api/import', function (req, res) {
           store[row[0]] = {id: row[0], name: row[1], age: row[2], address: row[3], team: row[4]};
           // console.log(itemsProcessed);
           if (itemsProcessed === output.length) {
-            console.log('done');
             res.status(200).send({
               success: true,
               message: output.length.toString() + ' records imported.'
@@ -112,6 +111,6 @@ app.post('/api/search', function (req, res) {
 });
 
 // start server and listen
-app.listen(3000, () => {
-  console.log('Angular server started on port 3000');
+app.listen(80, () => {
+  console.log('Angular server started on port 80');
 });

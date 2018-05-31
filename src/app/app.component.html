@@ -2,13 +2,25 @@
   <div class="d-flex bd-highlight">
     <div class="p-2 w-100 bd-highlight">
       <div class="custom-file">
-        <input type="file" class="custom-file-input" id="uploadField" (change)="handleFileInput($event.target.files)">
-        <label class="custom-file-label" for="uploadField">{{this.fileToUpload?this.fileToUpload.name:'Choose
-          file'}}</label>
+        <input type="file"
+               class="custom-file-input"
+               id="uploadField"
+               (change)="handleFileInput($event.target.files)"
+               [disabled]="fileImporting"
+               accept=".csv">
+        <label class="custom-file-label" for="uploadField">
+          {{this.fileToUpload?this.fileToUpload.name:'Choose file'}}
+        </label>
       </div>
     </div>
     <div class="p-2 flex-shrink-1 bd-highlight">
-      <button type="button" class="btn btn-primary" (click)="uploadFile()">Upload</button>
+      <button type="button" class="btn btn-primary"
+              (click)="uploadFile()"
+              [disabled]="fileImporting">
+        <i class="fa fa-spinner fa-spin" *ngIf="fileImporting"></i>
+        <span *ngIf="fileImporting"> File Importing</span>
+        <span *ngIf="!fileImporting">Upload</span>
+      </button>
     </div>
   </div>
   <div class="d-flex bd-highlight">
@@ -17,15 +29,44 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
         </div>
-        <input id="searchField" type="text" class="form-control" aria-label="Default"
-               aria-describedby="inputGroup-sizing-default"
-               placeholder="Enter a name"
-               [(ngModel)]="asyncSelected"
-               [typeahead]="dataSource"
-               (typeaheadLoading)="changeTypeaheadLoading($event)"
-               (typeaheadOnSelect)="typeaheadOnSelect($event)"
-               typeaheadOptionField="name">
-        <div *ngIf="typeaheadLoading">Loading</div>
+
+        <input id="searchField"
+               type="text"
+               class="form-control"
+               [(ngModel)]='model' (ngModelChange)='changed($event)'/>
+
+        <div class="dropdown" *ngIf="results.length>0">
+          <h5 class="dropdown-item" *ngFor="let result of results; let i = index" [id]="'result-' + i"
+              (click)="itemSelect(result)">
+            {{result.name}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex bd-highlight" *ngIf="selectedItem">
+    <div class="p-2 w-100 bd-highlight">
+      <div class="item-info-card">
+        <h6>Item Information</h6>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">age</th>
+            <th scope="col">address</th>
+            <th scope="col">team</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">{{selectedItem.id}}</th>
+            <td>{{selectedItem.name}}</td>
+            <td>{{selectedItem.age}}</td>
+            <td>{{selectedItem.address}}</td>
+            <td>{{selectedItem.team}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

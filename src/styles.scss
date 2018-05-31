@@ -5,3 +5,30 @@
   padding: 10px;
   margin-top: 50px;
 }
+
+.dropdown {
+  width: -webkit-calc(100% - 75px);
+  width: -moz-calc(100% - 75px);
+  width: calc(100% - 75px);
+  margin-left: 77px;
+  position: absolute;
+  background: white;
+  top: 40px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: lightgray;
+}
+
+.dropdown h5 {
+  cursor: pointer;
+  padding: 0px 14px;
+}
+
+.item-info-card {
+  width: 100%;
+}
+
+.item-info-card thead {
+  background-color: #007bff !important;
+  color: white;
+}

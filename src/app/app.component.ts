@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ApiService } from './api.service';
-import * as $ from 'jquery';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
   selector: 'app-root',
@@ -12,30 +13,33 @@ import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 })
 export class AppComponent {
   fileToUpload: File = null;
-  asyncSelected: string;
-  typeaheadLoading: boolean;
-  typeaheadNoResults: boolean;
-  dataSource: Observable<any>;
+  fileImporting = false;
+  selectedItem: any;
 
+  model: string;
+  modelChanged: Subject<string> = new Subject<string>();
+  results = [];
 
   constructor(private api: ApiService) {
-    this.dataSource = Observable.create((observer: any) => {
-      // Runs on every search
-      observer.next(this.asyncSelected);
-    }).mergeMap((token: string) => this.getStatesAsObservable(token));
+    this.modelChanged
+      .debounceTime(300) // wait 300ms after the last event before emitting last event
+      .distinctUntilChanged() // only emit if value is different from previous value
+      .subscribe(model => {
+        this.api.search(model)
+          .subscribe(res => {
+            this.results = res.results;
+            console.log(this.results);
+          });
+      });
   }
 
-  getStatesAsObservable(token: string): Observable<any> {
-    return this.api.search(token)
-      .map(res => res.results);
+  itemSelect(item) {
+    this.selectedItem = item;
+    this.results = [];
   }
 
-  changeTypeaheadLoading(e: boolean): void {
-    this.typeaheadLoading = e;
-  }
-
-  typeaheadOnSelect(e: TypeaheadMatch): void {
-    console.log('Selected value: ', e.value);
+  changed(text: string) {
+    this.modelChanged.next(text);
   }
 
   handleFileInput(files: FileList) {
@@ -44,9 +48,13 @@ export class AppComponent {
 
   uploadFile() {
     if (this.fileToUpload) {
+      this.fileImporting = true;
       this.api.fileUpload(this.fileToUpload)
         .subscribe(result => {
-          alert(JSON.stringify(result));
+          if (result.success) {
+            alert(result.message);
+          }
+          this.fileImporting = false;
         });
     }
   }
