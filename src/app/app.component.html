@@ -9,7 +9,7 @@
                [disabled]="fileImporting"
                accept=".csv">
         <label class="custom-file-label" for="uploadField">
-          {{this.fileToUpload?this.fileToUpload.name:'Choose file'}}
+          {{this.fileToUpload?this.fileToUpload.name:'Please import the csv file'}}
         </label>
       </div>
     </div>
@@ -23,7 +23,7 @@
       </button>
     </div>
   </div>
-  <div class="d-flex bd-highlight">
+  <div class="d-flex bd-highlight" *ngIf="importSuccessful">
     <div class="p-2 w-100 bd-highlight">
       <div class="input-group mb-3">
         <div class="input-group-prepend">

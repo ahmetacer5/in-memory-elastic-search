@@ -19,6 +19,7 @@ export class AppComponent {
   model: string;
   modelChanged: Subject<string> = new Subject<string>();
   results = [];
+  importSuccessful = false;
 
   constructor(private api: ApiService) {
     this.modelChanged
@@ -53,6 +54,7 @@ export class AppComponent {
         .subscribe(result => {
           if (result.success) {
             alert(result.message);
+            this.importSuccessful = true;
           }
           this.fileImporting = false;
         });
