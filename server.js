@@ -11,7 +11,6 @@ const fileUpload = require('express-fileupload');
 
 // creating in memory database
 var elasticlunr = require('elasticlunr');
-var lunr = require('lunr');
 var records = null;
 var store = {};
 // CSV Parser module
