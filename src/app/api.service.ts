@@ -15,8 +15,8 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 @Injectable()
 export class ApiService {
-  apihost = environment.apihost;
-  apibase = '/api';
+  apihost = (environment.production ? window.location.href : 'http://localhost:3000/');
+  apibase = 'api';
 
   constructor(private http: Http) {
   }
