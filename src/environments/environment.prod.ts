@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apihost: 'http://localhost'
+  apihost: 'https://csv-indexer.herokuapp.com'
 };
