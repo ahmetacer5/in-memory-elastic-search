@@ -1,4 +1,4 @@
-# PipedriveTask
+# In Memory Elastic Search
 
 In this project;
 
